@@ -210,13 +210,13 @@ class ProjectFiles:
                     if 'path' in obj and ProjectFiles._path_leaf(path) == ProjectFiles._path_leaf(obj.path):
                         return []
 
-        file_ref, _, path, tree, expected_build_phase = self._add_file_reference(path, parent, tree, force,
+        file_ref, abs_path, path, tree, expected_build_phase = self._add_file_reference(path, parent, tree, force,
                                                                                  file_options)
         if path is None or tree is None:
             return None
 
         # load project and add the things
-        child_project = self.__class__.load(os.path.join(path, 'project.pbxproj'))
+        child_project = self.__class__.load(os.path.join(abs_path, 'project.pbxproj'))
         child_products = child_project.get_build_phases_by_name('PBXNativeTarget')
 
         # create an special group without parent (ref proxies)
